@@ -2,7 +2,6 @@ import numpy as np
 from scipy.sparse import diags
 from scipy.sparse.linalg import spsolve
 import matplotlib.pyplot as plt
-from mpl_toolkits import mplot3d
 
 # Define the grid and physical parameters
 Lx, Ly = 2.0, 1.0  # Length of the domain in the x and y direction (m)
