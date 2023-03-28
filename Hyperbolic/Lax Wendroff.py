@@ -2,11 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def LF(u, c):
+def LW(u, c):
     v = u.copy()
-    v[0] = (u[1] + u[-1]) / 2 - (c / 2) * (u[1] - u[-1])
-    v[1:-1] = ((u[2:] + u[:-2]) / 2) - (c / 2) * (u[2:] - u[:-2])
-    v[-1] = (u[0] + u[-2]) / 2 - (c / 2) * (u[0] - u[-2])
+    v[0] = u[0] - (c / 2) * (u[1] - u[-1]) + ((c ** 2) / 2) * ((u[1] - 2 * u[0] + u[-1]))
+    v[1:-1] = u[1:-1] - (c / 2) * (u[2:] - u[:-2]) + ((c ** 2) / 2) * (u[2:] - 2 * u[1:-1] + u[:-2])
+    v[-1] = u[-1] - (c / 2) * (u[0] - u[-2]) + ((c ** 2) / 2) * ((u[0] - 2 * u[-1] + u[-2]))
     return v
 
 
@@ -32,26 +32,25 @@ plt.plot(x_values, u, label="Initial Condition")
 
 # Run the simulation
 for j in range(num_time_step):
-    u = LF(u, c)
+    u = LW(u, c)
 
 # Numerical
-plt.plot(x_values, u, label=f"After {sim_time} seconds (numerically)")
+plt.plot(x_values, u, label="After {} seconds (numerically)".format(sim_time))
 
 # Define the simulation parameters
 sim_time_2 = 6  # Total simulation time
-num_time_step_2 = round(sim_time_2 / Δt)  # Number of time steps
+num_time_step_2 = int(sim_time_2 / Δt)  # Number of time steps
 
 # Run the simulation
 for j in range(num_time_step_2):
-    u = LF(u, c)
+    u = LW(u, c)
 
 # Numerical
-plt.plot(x_values, u, label=f"After {sim_time + sim_time_2} seconds (numerically)")
+plt.plot(x_values, u, label="After {} seconds (numerically)".format(sim_time + sim_time_2))
 
-# Add plot details and show the plot
 plt.xlabel("x")
 plt.ylabel("Amplitude")
-plt.title("Lax Friedrich")
-plt.legend()
-plt.grid(True)
+plt.title("Lax Wendroff")
+plt.legend(loc="upper left")
+plt.grid()
 plt.show()
