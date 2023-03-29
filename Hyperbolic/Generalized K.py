@@ -2,10 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def mod1(a, b):
-    return a - b * np.floor(a / b)
-
-
 def GEN_K(u, c):
     n = len(u)
     v = u.copy()
