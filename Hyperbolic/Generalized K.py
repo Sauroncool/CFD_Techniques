@@ -12,9 +12,9 @@ def GEN_K(u, c):
     ϵ = 0
     k = -1
     for i in range(n):
-        in1 = mod1(i - 1, n)  # index of i-1 with periodic boundary
-        in2 = mod1(i - 2, n)  # index of i-2 with periodic boundary
-        ip1 = mod1(i + 1, n)  # index of i+1 with periodic boundary
+        in1 = (i - 1) % n  # index of i-1 with periodic boundary
+        in2 = (i - 2) % n  # index of i-2 with periodic boundary
+        ip1 = (i + 1) % n  # index of i+1 with periodic boundary
         v[i] = u[i] - c * (u[i] - u[in1]) - (ϵ * c / 4) * (
                     (1 - k) * (u[i] - 2 * u[in1] + u[in2]) + (1 + k) * (u[ip1] - 2 * u[i] + u[in1]))
     return v
