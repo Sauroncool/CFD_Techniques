@@ -2,17 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def GEN_K(u, c):
-    n = len(u)
-    v = u.copy()
-    ϵ = 0
-    k = -1
-    for i in range(n):
-        in1 = (i - 1) % n  # index of i-1 with periodic boundary
-        in2 = (i - 2) % n  # index of i-2 with periodic boundary
-        ip1 = (i + 1) % n  # index of i+1 with periodic boundary
-        v[i] = u[i] - c * (u[i] - u[in1]) - (ϵ * c / 4) * (
-                    (1 - k) * (u[i] - 2 * u[in1] + u[in2]) + (1 + k) * (u[ip1] - 2 * u[i] + u[in1]))
+def leapfrog(u, u_prev, c):
+    v = np.copy(u)
+    v[0] = u_prev[0] - c * (u[1] - u[-1])
+    v[1:-1] = u_prev[1:-1] - c * (u[2:] - u[:-2])
+    v[-1] = u_prev[-1] - c * (u[0] - u[-2])
     return v
 
 
@@ -33,13 +27,14 @@ num_time_step = int(sim_time / Δt)  # Number of time steps
 # Define the initial condition
 x_values = np.linspace(0, L, Nx)
 u = np.exp(-4 * (x_values - 5) ** 2)
+u_prev = u.copy()
 
 # Plot the initial condition
 plt.plot(x_values, u, label="Initial Condition")
 
 # Run the simulation
 for j in range(num_time_step):
-    u = GEN_K(u, c)
+    u, u_prev = leapfrog(u, u_prev, c), u
 
 # Numerical
 plt.plot(x_values, u, label=f"After {sim_time} seconds (numerically)")
@@ -50,14 +45,14 @@ num_time_step_2 = int(sim_time_2 / Δt)  # Number of time steps
 
 # Run the simulation
 for j in range(num_time_step_2):
-    u = GEN_K(u, c)
+    u, u_prev = leapfrog(u, u_prev, c), u
 
 # Numerical
 plt.plot(x_values, u, label=f"After {sim_time + sim_time_2} seconds (numerically)")
 
 plt.xlabel("x")
 plt.ylabel("Amplitude")
-plt.title("Generalized K")
+plt.title("Leapfrog")
 plt.legend()
 plt.grid()
 plt.show()

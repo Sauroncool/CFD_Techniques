@@ -51,6 +51,6 @@ plt.plot(x_values, u, label="After {} seconds (numerically)".format(sim_time + s
 plt.xlabel("x")
 plt.ylabel("Amplitude")
 plt.title("Lax Wendroff")
-plt.legend(loc="upper left")
+plt.legend()
 plt.grid()
 plt.show()
