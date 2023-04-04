@@ -34,6 +34,7 @@ plt.plot(x_values, u, label="Initial Condition")
 
 
 def T(x_values, t, α):  # Analytic Solution
+    # Solution = np.exp(-4 * (x_values - ( 5 + α * t)) ** 2)    With Periodic BCs
     peak_point = 5 + α * t
     while True:
         if peak_point < 10:
