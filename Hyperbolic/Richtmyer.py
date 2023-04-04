@@ -44,13 +44,15 @@ x_values = np.linspace(0, L, Nx)
 u = np.exp(-4 * (x_values - 5) ** 2)
 # Plot the initial condition
 plt.plot(x_values, u, label="Initial Condition")
+
+
 def T(x_values, t, α):  # Analytic Solution
+    # Solution = np.exp(-4 * (x_values - ( 5 + α * t)) ** 2)    With Periodic BCs
     peak_point = 5 + α * t
-    while True:
-        if peak_point < 10:
-            break
+    while peak_point > 10:
         peak_point = peak_point - 10
     return np.exp(-4 * (x_values - peak_point) ** 2)
+
 
 # Run the simulation
 for j in range(num_time_step):
@@ -72,7 +74,7 @@ for j in range(num_time_step_2):
 # Numerical
 plt.plot(x_values, u, label="After {} seconds (numerically)".format(sim_time + sim_time_2))
 # Analytical
-plt.plot(x_values, T(x_values, sim_time+sim_time_2, α), label=f"After {sim_time+sim_time_2} seconds (analytically)")
+plt.plot(x_values, T(x_values, sim_time + sim_time_2, α), label=f"After {sim_time + sim_time_2} seconds (analytically)")
 
 plt.xlabel("x")
 plt.ylabel("Amplitude")
