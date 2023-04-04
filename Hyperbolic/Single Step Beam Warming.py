@@ -6,9 +6,7 @@ def BW(u, c):
     n = len(u)
     v = u.copy()
     for i in range(0, n):
-        in1 = (i - 1) % n  # index of i-1 with periodic boundary
-        in2 = (i - 2) % n  # index of i-2 with periodic boundary
-        v[i] = u[i] - (c / 2) * (3 * u[i] - 4 * u[in1] + u[in2]) + (c ** 2 / 2) * (u[i] - 2 * u[in1] + u[in2])
+        v[i] = u[i] - (c / 2) * (3 * u[i] - 4 * u[i-1] + u[i-2]) + (c ** 2 / 2) * (u[i] - 2 * u[i-1] + u[i-2])
     return v
 
 
