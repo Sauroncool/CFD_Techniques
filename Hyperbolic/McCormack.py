@@ -2,14 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def predictor(u, c):
+def predictor(u, c):    # FTFS Method
     v = np.copy(u)
     v[:-1] = u[:-1] - c * (u[1:] - u[:-1])
     v[-1] = u[-1] - c * (u[0] - u[-1])
     return v
 
 
-def corrector(u, u_prev, c):
+def corrector(u, u_prev, c):    # BTBS Method
     v = np.copy(u)
     v[0] = ((u_prev[0] + u[0]) / 2) - (c / 2) * (u[0] - u[-1])
     v[1:] = ((u_prev[1:] + u[1:]) / 2) - (c / 2) * (u[1:] - u[:-1])
