@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 def predictor(u, c):  # Lax Friedrich Method
     v = np.copy(u)
     v[0] = (u[1] + u[-1]) / 2 - (c / 4) * (u[1] - u[-1])
-    v[1:-1] = ((u[2:] + u[:-2]) / 2) - (c / 4) * (u[2:] - u[:-2])
+    v[1:-1] = (u[2:] + u[:-2]) / 2 - (c / 4) * (u[2:] - u[:-2])
     v[-1] = (u[0] + u[-2]) / 2 - (c / 4) * (u[0] - u[-2])
     return v
 
