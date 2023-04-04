@@ -2,21 +2,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def predictor(u, c):
+def predictor(u, c):  # Lax Friedrich Method
     v = np.copy(u)
-    v[:-1] = u[:-1] - c * (u[1:] - u[:-1])
-    v[-1] = u[-1] - c * (u[0] - u[-1])
+    v[0] = (u[1] + u[-1]) / 2 - (c / 4) * (u[1] - u[-1])
+    v[1:-1] = ((u[2:] + u[:-2]) / 2) - (c / 4) * (u[2:] - u[:-2])
+    v[-1] = (u[0] + u[-2]) / 2 - (c / 4) * (u[0] - u[-2])
     return v
 
 
-def corrector(u, u_prev, c):
+def corrector(u, u_prev, c):  # Leap Frog Method
     v = np.copy(u)
-    v[0] = ((u_prev[0] + u[0]) / 2) - (c / 2) * (u[0] - u[-1])
-    v[1:] = ((u_prev[1:] + u[1:]) / 2) - (c / 2) * (u[1:] - u[:-1])
+    v[0] = u_prev[0] - (c / 2) * (u[1] - u[-1])
+    v[1:-1] = u_prev[1:-1] - (c / 2) * (u[2:] - u[:-2])
+    v[-1] = u_prev[-1] - (c / 2) * (u[0] - u[-2])
     return v
 
 
-def MacCormack(u, c):
+def Richtmyer(u, c):
     u_prev = np.copy(u)
     u_predicted = predictor(u, c)
     u_corrected = corrector(u_predicted, u_prev, c)
@@ -45,7 +47,7 @@ plt.plot(x_values, u, label="Initial Condition")
 
 # Run the simulation
 for j in range(num_time_step):
-    u = MacCormack(u, c)
+    u = Richtmyer(u, c)
 
 # Numerical
 plt.plot(x_values, u, label="After {} seconds (numerically)".format(sim_time))
@@ -56,7 +58,7 @@ num_time_step_2 = int(sim_time_2 / Δt)  # Number of time steps
 
 # Run the simulation
 for j in range(num_time_step_2):
-    u = MacCormack(u, c)
+    u = Richtmyer(u, c)
 
 # Numerical
 plt.plot(x_values, u, label="After {} seconds (numerically)".format(sim_time + sim_time_2))
