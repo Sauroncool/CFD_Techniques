@@ -49,9 +49,9 @@ plt.plot(x_values, u, label="Initial Condition")
 def T(x_values, t, α):  # Analytic Solution
     # Solution = np.exp(-4 * (x_values - ( 5 + α * t)) ** 2)    With Periodic BCs
     peak_point = 5 + α * t
-    while peak_point > 10:
+    while peak_point >= 10:
         peak_point = peak_point - 10
-    return np.exp(-4 * (x_values - peak_point) ** 2)
+    return np.exp(-4 * (x_values - peak_point) ** 2)+np.exp(-4 * (x_values - (peak_point+10)) ** 2)
 
 
 # Run the simulation
@@ -64,7 +64,7 @@ plt.plot(x_values, u, label="After {} seconds (numerically)".format(sim_time))
 plt.plot(x_values, T(x_values, sim_time, α), label=f"After {sim_time} seconds (analytically)")
 
 # Define the simulation parameters
-sim_time_2 = 6  # Total simulation time
+sim_time_2 = 3.5  # Total simulation time
 num_time_step_2 = int(sim_time_2 / Δt)  # Number of time steps
 
 # Run the simulation
