@@ -64,7 +64,7 @@ plt.plot(x_values, u, label="After {} seconds (numerically)".format(sim_time))
 plt.plot(x_values, T(x_values, sim_time, α), label=f"After {sim_time} seconds (analytically)")
 
 # Define the simulation parameters
-sim_time_2 = 3.5  # Total simulation time
+sim_time_2 = 6  # Total simulation time
 num_time_step_2 = int(sim_time_2 / Δt)  # Number of time steps
 
 # Run the simulation
