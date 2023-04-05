@@ -41,7 +41,8 @@ num_time_step = int(sim_time / Δt)  # Number of time steps
 
 # Define the initial condition
 x_values = np.linspace(0, L, Nx)
-u = np.exp(-4 * (x_values - 5) ** 2)
+# u = np.exp(-4 * (x_values - 5) ** 2)
+u = np.exp(-30 * (x_values - 2) ** 2) + np.exp(-1 * (x_values - 5) ** 2)
 # Plot the initial condition
 plt.plot(x_values, u, label="Initial Condition")
 
@@ -51,7 +52,12 @@ def T(x_values, t, α):  # Analytic Solution
     peak_point = 5 + α * t
     while peak_point >= 10:
         peak_point = peak_point - 10
-    return np.exp(-4 * (x_values - peak_point) ** 2)+np.exp(-4 * (x_values - (peak_point+10)) ** 2)
+    peak_point_2 = 2 + α * t
+    while peak_point_2 >= 10:
+        peak_point_2 = peak_point_2 - 10
+    return np.exp(-(x_values - peak_point) ** 2) + np.exp(-(x_values - (peak_point + 10)) ** 2) + np.exp(
+        -30 * (x_values - peak_point_2) ** 2) + np.exp(-30 * (x_values - (peak_point_2 + 10)) ** 2)
+    # return np.exp(-4 * (x_values - peak_point) ** 2)+np.exp(-4 * (x_values - (peak_point+10)) ** 2)
 
 
 # Run the simulation
