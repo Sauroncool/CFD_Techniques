@@ -6,7 +6,7 @@ def Analytical(u, t, α, Δx):  # Analytic Solution
     v = u.copy()
     n = len(u)
     for i in range(n):
-        v[int((i + α * t / Δx) % Nx)] = u[i]
+        v[i] = u[int(i - (α * t / Δx) % Nx)]
     return v
 
 
