@@ -26,7 +26,10 @@ num_time_step = int(sim_time / Δt)  # Number of time steps
 
 # Define the initial condition
 x_values = np.linspace(0, L, Nx)
-u = np.exp(-4 * (x_values - 5) ** 2)
+# u = np.exp(-4 * (x_values - 5) ** 2)
+u = np.zeros(Nx)
+u[(x_values >= 1) & (x_values <= 2)] = x_values[(x_values >= 1) & (x_values <= 2)] - 1
+u[(x_values >= 2) & (x_values <= 3)] = 3 - x_values[(x_values >= 2) & (x_values <= 3)]
 
 # Plot the initial condition
 plt.plot(x_values, u, label="Initial Condition")
