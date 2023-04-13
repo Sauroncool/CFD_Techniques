@@ -6,13 +6,13 @@ def f(u):
     return u ** 2 / 2
 
 
-def predictor(u, Δt, Δx):
+def predictor(u, Δt, Δx):  # FTFS Method
     v = np.copy(u)
     v[:-1] = u[:-1] - (Δt / Δx) * (f(u[1:]) - f(u[:-1]))
     return v
 
 
-def corrector(u, u_prev, Δt, Δx):
+def corrector(u, u_prev, Δt, Δx):  # BTBS Method
     v = np.copy(u)
     v[1:] = ((u_prev[1:] + u[1:]) / 2) - (Δt / (2 * Δx)) * (f(u[1:]) - f(u[:-1]))
     return v
@@ -27,14 +27,16 @@ def MacCormack(u, Δt, Δx):
     return u_corrected
 
 
-L = 5.0
-Δx = 0.025
-Nx = int(L / Δx)
+# Define the grid parameters
+L = 5.0  # Length of the domain in the x direction
+Δx = 0.025  # Grid spacing in the x direction
+Nx = int(L / Δx)  # Number of grid points in the x direction
 
-sim_time = 2.0
-Δt = Δx
-num_time_step = round(sim_time / Δt)
+sim_time = 2.0  # Total simulation time
+Δt = Δx  # time step size
+num_time_step = round(sim_time / Δt)    # Number of time steps
 
+# Define the initial condition
 x_values = np.linspace(0, L, Nx)
 u = np.zeros(Nx)
 u[x_values < 0.25] = 1
